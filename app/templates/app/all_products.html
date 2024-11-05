@@ -1,0 +1,124 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}All Products{% endblock title %}
+
+{% block main-content %}
+<div class="container my-4 ">
+    <div class="d-flex justify-content-center align-items-center" style="min-height: 100px;">
+        <h2 style="color:#fff; font-size: 40px;" 
+            class="btn  product-link" 
+            data-bs-toggle="offcanvas" 
+            data-bs-target="#offcanvasWithBothOptions" 
+            aria-controls="offcanvasWithBothOptions" 
+            id="categoryTitle">
+        </h2>
+    </div>
+    <hr style="color:#fff;">
+
+    <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel" style="background: linear-gradient(170deg, #5040fa, #dbedff);">
+    <div class="offcanvas-header">
+        <h4 style="color:white; " class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Category</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    
+    <div class="offcanvas-body d-flex flex-column gap-3">
+        <a style="color:white;" class="btn shadow px-5 py-2" href="{% url 'all_products' %}" onclick="updateCategoryTitle('All Products')">All</a>
+        <a style="color:white;" class="btn shadow px-5 py-2" href="{% url 'category' 'ML' %}" onclick="updateCategoryTitle('Milk')">Milk</a>
+        <a style="color:white;" class="btn shadow px-5 py-2" href="{% url 'category' 'CR' %}" onclick="updateCategoryTitle('Curd')">Curd</a>
+        <a style="color:white;" class="btn shadow px-5 py-2" href="{% url 'category' 'MS' %}" onclick="updateCategoryTitle('Milkshake')">Milkshake</a>
+        <a style="color:white;" class="btn shadow px-5 py-2" href="{% url 'category' 'LS' %}" onclick="updateCategoryTitle('Lassi')">Lassi</a>
+        <a style="color:white;" class="btn shadow px-5 py-2" href="{% url 'category' 'GH' %}" onclick="updateCategoryTitle('Ghee')">Ghee</a>
+        <a style="color:white;" class="btn shadow px-5 py-2" href="{% url 'category' 'PN' %}" onclick="updateCategoryTitle('Paneer')">Paneer</a>
+        <a style="color:white;" class="btn shadow px-5 py-2" href="{% url 'category' 'CZ' %}" onclick="updateCategoryTitle('Cheese')">Cheese</a>
+        <a style="color:white;" class="btn shadow px-5 py-2" href="{% url 'category' 'IC' %}" onclick="updateCategoryTitle('Ice-cream')">Ice-cream</a>
+    </div>
+    </div>
+
+    <div class="row">
+    <div class="col-sm-3">
+        <div class="list-group">  
+            {% for val in title %}
+                <a href="{% url 'category-title' val.title %}" class="list-group-item list-group-item-action category-link" aria-current="true">{{ val.title }}</a>
+            {% endfor %}
+        </div>
+    </div>
+    
+    {% for Product in Products %}
+    <div class="col text-center mb-4">
+        <a href="{% url 'product-detail' Product.id %}" class="btn">
+        <div>
+            <img src="{{ Product.product_image.url }}" class="product-img-hover" width="300px" height="200px" />
+            <div class="fw-bold" style="color: white;">{{ Product.title }} </div>
+            <div class="fw-bold text-danger">
+            Rs.{{ Product.discount_price }} /-
+            <small class="fw-light text-decoration-line-through">{{ Product.selling_price }}</small>
+            </div>
+            <div class="product-actions">
+            {% if user.is_authenticated %}
+                {% if Product.id in cart_items %}
+                    <button class="add-to-cart-btn btn btn-success shadow px-5 py-2" data-product-id="{{ Product.id }}">
+                        Added&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-check"></i>
+                    </button>
+                {% else %}
+                    <button class="add-to-cart-btn btn btn-primary shadow px-5 py-2" data-product-id="{{ Product.id }}">
+                        Add to Cart&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-cart-shopping"></i>
+                    </button>
+                {% endif %}
+            {% else %}
+                <button class="btn btn-secondary shadow px-5 py-2" disabled>
+                Log in to Add to Cart&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-user"></i>
+                </button>
+            {% endif %}
+            </div>
+        </div>
+        </a>
+    </div>
+    {% endfor %}
+    </div>
+ 
+</div>
+
+
+
+  
+<style>
+    .category-link {
+        background-color: #CBE1FA;
+        color: black;
+        border: 3px solid #00FFFF;
+        transition: all 0.3s ease-in-out; /* Smooth transition */
+     }
+     
+     .category-link:hover {
+        background-image: radial-gradient( circle 853px at 3.3% 5.3%,  rgba(29,231,240,0.56) 0%, rgba(247,92,246,0.5) 100.2% );
+        color: #12c;
+     }
+     .product-img-hover {
+        width: 300px;
+        height: 200px;
+       
+        transition: transform 0.3s ease-in-out;
+    }
+    
+    .product-img-hover:hover {
+        transform: scale(1.1); /* Zoom effect */
+    }
+    .add-to-cart-btn:hover {
+        transform: scale(1.1); /* Zoom effect */
+        box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3); /* Add shadow on hover */
+    }
+     
+    .offcanvas-body .btn {
+        color: white; /* Initial text color */
+        background-color: transparent; /* Initial background color */
+        transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+    }
+    
+    .offcanvas-body .btn:hover {
+        background-color: rgba(255, 255, 255, 0.1); /* Change background color on hover */
+        color: #00FF7F; /* Change text color on hover (example color, adjust as needed) */
+    }
+    
+</style>
+
+{% endblock main-content %}

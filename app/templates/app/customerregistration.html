@@ -1,0 +1,236 @@
+{% extends "app/base.html" %}
+{% load static %}
+{% block title  %}Customer Registration{% endblock title %}
+{% block main-content %}
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100vh;
+        font-family: sans-serif;
+    }
+
+    .area {
+        width: 100%;
+        height: 100vh;
+        position: relative; /* Position relative to contain absolute elements */
+        overflow: hidden; /* Ensures circles do not overflow */
+    }
+
+    .context {
+        position: absolute; /* Allows absolute positioning */
+        top: 50%; /* Start position at 50% from the top */
+        left: 50%; /* Start position at 50% from the left */
+        transform: translate(-50%, -50%); /* Adjust position to center */
+        width: 100%; /* Optional: Define a width if needed */
+        max-width: 600px; /* Optional: Set a max-width for larger screens */
+        text-align: center; /* Center text */
+    }
+
+    .Section_top {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        position: relative;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        animation: change 30s infinite ease-in-out;
+    }
+
+
+    
+
+
+    @import url('https://fonts.googleapis.com/css?family=Lato:100&display=swap');
+
+    .btn-primary {
+        width: 190px; /* Adjusted width */
+        height: 50px; /* Adjusted height */
+        position: relative;
+        cursor: pointer;
+        background: transparent;
+        border: 1px solid #91C9FF;
+        color: white;
+        font-family: 'Lato', sans-serif;
+        outline: none;
+        transition: background-color 0.5s ease-in-out;
+        display: inline-block;
+        text-align: center;
+        padding: 10px;
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    .btn-primary svg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        fill: none;
+        stroke: #fff;
+        stroke-dasharray: 300 600;  /* Adjust dasharray to fit rectangle */
+        stroke-dashoffset: 300; /* Start with the stroke hidden */
+        transition: stroke-dashoffset 1s ease-in-out;
+        z-index: 0;
+    }
+
+    .btn-primary span {
+        position: relative;
+        z-index: 1; /* Keeps the text above the SVG */
+    }
+
+    .btn-primary:hover {
+        background: black; /* Change background on hover */
+    }
+
+    .btn-primary:hover svg {
+        stroke-dashoffset: -600; /* Animate stroke to show border on hover */
+    }
+
+    .circles {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .circles li {
+        position: absolute;
+        display: block;
+        list-style: none;
+        width: 20px;
+        height: 20px;
+        background: rgba(255, 255, 255, 0.2);
+        animation: animate 25s linear infinite;
+        bottom: -150px;
+    }
+
+    .circles li:nth-child(1) { left: 25%; width: 80px; height: 80px; animation-delay: 0s; }
+    .circles li:nth-child(2) { left: 10%; width: 20px; height: 20px; animation-delay: 2s; animation-duration: 12s; }
+    .circles li:nth-child(3) { left: 70%; width: 20px; height: 20px; animation-delay: 4s; }
+    .circles li:nth-child(4) { left: 40%; width: 60px; height: 60px; animation-delay: 0s; animation-duration: 18s; }
+    .circles li:nth-child(5) { left: 65%; width: 20px; height: 20px; animation-delay: 0s; }
+    .circles li:nth-child(6) { left: 75%; width: 110px; height: 110px; animation-delay: 3s; }
+    .circles li:nth-child(7) { left: 35%; width: 150px; height: 150px; animation-delay: 7s; }
+    .circles li:nth-child(8) { left: 50%; width: 25px; height: 25px; animation-delay: 15s; animation-duration: 45s; }
+    .circles li:nth-child(9) { left: 20%; width: 15px; height: 15px; animation-delay: 2s; animation-duration: 35s; }
+    .circles li:nth-child(10) { left: 85%; width: 150px; height: 150px; animation-delay: 0s; animation-duration: 11s; }
+
+    @keyframes animate {
+        0% {
+            transform: translateY(0) rotate(0deg);
+            opacity: 1;
+            border-radius: 0;
+        }
+        100% {
+            transform: translateY(-1000px) rotate(720deg);
+            opacity: 0;
+            border-radius: 50%;
+        }
+    }
+
+    .text-danger {
+        color: #ff4d4d; /* Red for error messages */
+    }
+
+    hr.white-hr {
+        border: 1px solid #fff; /* White horizontal line */
+        margin: 20px 0; /* Spacing around the line */
+    }
+
+    /* Additional CSS styles for the form elements */
+    .formbg label {
+        color: white; /* Change label color to white */
+    }
+    
+    .formbg input,
+    .formbg select,
+    .formbg textarea {
+        color: white; /* Change input text color to white */
+        background: rgba(255, 255, 255, 0.2); /* Slightly transparent background for input fields */
+        border: 1px solid #91C9FF; /* Border color */
+        padding: 10px; /* Add padding for better spacing */
+        border-radius: 5px; /* Rounded corners for inputs */
+        width: calc(100% - 20px); /* Full width minus padding */
+    }
+    
+    .formbg input::placeholder,
+    .formbg select::placeholder,
+    .formbg textarea::placeholder {
+        color: #ccc; /* Placeholder color */
+    }
+    .formbg {
+        position: absolute; /* Positioning the formbg absolutely */
+        top: 50%; /* Center vertically */
+        left: 50%; /* Center horizontally */
+        transform: translate(-50%, -50%); /* Adjust for its own width and height */
+        text-transform: uppercase; /* Text styling */
+        border-radius: 10px; /* Rounded corners */
+        padding: 40px; /* Increased padding for better space */
+        background: rgba(255, 255, 255, 0.15); /* Darker glass effect */
+        backdrop-filter: blur(10px); /* Glass effect */
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4); /* Stronger shadow for depth */
+        transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transition for hover effect */
+        width: 400px; /* Fixed width for the form */
+        text-align: center; /* Center text in form */
+    }
+</style>
+
+<div class="area">
+    <ul class="circles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <div class="Section_top">
+        <div class="context">
+            <div class="formbg">
+                <form name="myForm" action="" method="post" novalidate >
+                    <h3 class="forms">Customer Registration</h3>
+                    <hr class="white-hr">
+                    {% csrf_token %}
+                    {% for fm in form %}
+                        {{fm.label_tag}} {{fm}} <small class="text-danger">{{fm.errors|striptags}}</small><br>
+                    {% endfor %}
+                    <button type="submit" class="btn-primary">
+                        <span style='font-weight: 700;'>Submit</span>
+                        <svg width="200px" height="50px" viewBox="0 0 200 50" class="border">
+                            <polyline points="199,1 199,49 1,49 1,1 199,1" class="bg-line" />
+                            <polyline points="199,1 199,49 1,49 1,1 199,1" class="hl-line" />
+                        </svg>
+                    </button>
+                    <div class="text-center text-primary fw-bold">
+                        <small>Existing User? <a href="{% url "login" %}" class="text-danger">Login Now</a></small>
+                    </div>
+
+                    {% if form.non_field_errors %}
+                        {% for error in form.non_field_errors %}
+                            <p class="alert alert-danger my-3">{{error}}</p>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if messages %}
+                        {% for msg in messages %}
+                            <div class="alert alert-{{msg.tags}}" role="alert">
+                                {{msg}}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock main-content %}

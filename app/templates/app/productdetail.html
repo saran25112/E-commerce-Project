@@ -1,0 +1,356 @@
+{% extends "app/base.html" %}
+{% load static %}
+{% block title  %}product-detail{% endblock title %}
+
+{% block main-content %}
+<div class="container mt-3">
+    <!-- Main Product Details -->
+    <div class="row flex justify-content-between">
+        <div class="img2 col-lg-5 mt-5">
+            <img src="{{Product.product_image.url}}" class="image col-xs-6 col-sm-12 col-lg-12 mt-3 text-sm-center w-100 h-75" alt="">
+        </div>
+        <div class="productdetail col-lg-5">
+            <h1 class="animated-title">{{Product.title}}</h1>
+            <h5 class="price-display">
+                <span class="original-price">Rs. {{ Product.selling_price }}/-</span>
+                <span class="discount-price">Rs. {{ Product.discount_price }}/-</span>
+            </h5>
+            <div class="product-features">
+                <h4>Product Features</h4>
+                <ul class="fs-5" style="font-family: Rajdhani">
+                    <li>{{Product.description}}</li>
+                    <li>Composition: {{Product.composition}}</li>
+                    <li>Use: {{Product.prodapp}}</li>
+                </ul>
+            </div>
+            <div class="d-flex align-items-center">
+                <!-- Cart, Buy Now, Wishlist Buttons -->
+                {% if Product.id in cart_items %}
+                    <button class="add-to-cart-btn btn btn-success shadow px-5 py-2 flex-fill" data-product-id="{{ Product.id }}">Added&nbsp;<i class="fa-solid fa-check"></i></button>
+                {% else %}
+                    <button class="add-to-cart-btn btn btn-primary shadow px-5 py-2 flex-fill" data-product-id="{{ Product.id }}">Add to Cart&nbsp;<i class="fa-solid fa-cart-shopping"></i></button>
+                {% endif %}
+                <a href="{% url 'buy_now' Product.id %}" class="btn btn-warning shadow buy-now-btn px-5 py-2 ms-4 flex-fill">Buy Now&nbsp;<i class="fas fa-shopping-bag"></i></a>
+                {% if wishlist %}
+                    <a pid="{{ Product.id }}" class="minus-wishlist ms-4 flex-fill"><i class="fas fa-heart fa-3x heart-icon add" style="color: red;"></i></a>
+                {% else %}
+                    <a pid="{{ Product.id }}" class="plus-wishlist ms-4 flex-fill"><i class="fa fa-heart fa-3x heart-icon remove" style="color:white;"></i></a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div><br><br>
+
+<div class="container">    <!-- Similar Products Section -->
+    {% if similar_products %}
+
+        <h3 >Similar Products</h3>
+        <div class="similar-products d-flex overflow-auto">
+            {% for similar_product in similar_products %}
+            <div class="card mx-2" style="min-width: 200px; max-width: 200px;">
+                <img src="{{ similar_product.product_image.url }}" class="card-img-top" alt="{{ similar_product.title }}">
+                <div class="card-body text-center">
+                    <h6 class="card-title">{{ similar_product.title }}</h6>
+                    <p class="card-text">Rs. {{ similar_product.discount_price }}</p>
+                    <a href="{% url 'product-detail' similar_product.id %}" class="view-btn btn btn btn-warning flex-fill">View</a>
+                    {% if similar_product.id in cart_items %}
+                        <button class="add-to-cart-btn btn btn-success flex-fill" data-product-id="{{ similar_product.id }}">
+                            Added<i class="fa-solid fa-check"></i>
+                        </button>
+                    {% else %}
+                        <button class="add-to-cart-btn btn btn-primary flex-fill" data-product-id="{{ similar_product.id }}">
+                            Cart&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div><br><br>
+
+<div class="container">
+    <h3 >All Products</h3>
+    <div class="scroll-container">
+        <div class="row flex-nowrap">
+            {% for Products in all_products %}
+            <div class="col text-center mb-4">
+                <a href="{% url 'product-detail' Products.id %}" class="btn">
+                    <div>
+                        <img src="{{ Products.product_image.url }}" class="product-img-hover" width="300px" height="200px" />
+                        <div class="fw-bold" style="color: white;">{{ Products.title }}</div>
+                        <div class="fw-bold text-danger">
+                            Rs.{{ Products.discount_price }}/-
+                            <small class="fw-light text-decoration-line-through">{{ Products.selling_price }}</small>
+                        </div>
+                        <div class="product-actions">
+                            {% if Products.id in cart_items %}
+                            <button class="add-to-cart-btn btn btn-success shadow px-5 py-2" data-product-id="{{ Products.id }}">
+                                Added&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-check"></i>
+                            </button>
+                            {% else %}
+                            <button class="add-to-cart-btn btn btn-primary shadow px-5 py-2" data-product-id="{{ Products.id }}">
+                                Add to Cart&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-cart-shopping"></i>
+                            </button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<style>
+    .scroll-container {
+        overflow-x: auto; /* Enable horizontal scrolling */
+        white-space: nowrap; /* Prevent line breaks */
+        padding: 20px 0; /* Optional padding */
+        scrollbar-width: none; /* For Firefox */
+    }
+    
+    .scroll-container::-webkit-scrollbar {
+        display: none; /* Hide scrollbar for Chrome, Safari, and Edge */
+    }
+    
+    .scroll-container .row {
+        display: inline-flex; /* Align items in a row */
+    }
+    
+    .scroll-container .col {
+        display: inline-block; /* Allow the columns to sit side by side */
+        margin-right: 15px; /* Spacing between items */
+    }
+    
+    .product-img-hover {
+        transition: transform 0.3s; /* Smooth scaling effect on hover */
+    }
+    
+    .product-img-hover:hover {
+        transform: scale(1.05); /* Slightly scale up the image on hover */
+    }
+    
+    
+</style>    
+<style>
+    .view-btn {
+        background-color: #ffc107; /* Original color */
+        transition: all 0.3s ease;
+    }
+    
+    .view-btn:hover {
+        background-color: #ff9800; /* Darker shade on hover */
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        transform: translateY(-3px); /* Slight lift effect */
+    }
+    
+    .similar-products-section {
+        margin-top: 20px;
+    }
+    
+    .similar-products {
+        display: flex;
+        overflow-x: auto;
+        padding-bottom: 15px;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none; /* For Firefox */
+    }
+    
+    .similar-products::-webkit-scrollbar {
+        display: none; /* Hide scrollbar for Chrome, Safari, and Edge */
+    } 
+       
+    .similar-products .card {
+        flex: 0 0 auto;
+        scroll-snap-align: start;
+    }
+    
+</style>
+<style>
+    /* Container styling */
+    .container {
+        padding: 20px;
+        border-radius: 20px;
+        background-size: 100% 300%;
+        color: white;
+        background-image: radial-gradient( circle farthest-corner at 0.2% 0.5%,  rgba(68,36,164,1) 3.7%, rgba(84,212,228,1) 92.7% );
+    }
+
+    /* Image animation styling */
+    .img2 img {
+        opacity: 0;
+        transform: scale(0.9);
+        animation: fadeInZoom 1.5s ease-out forwards;
+    }
+
+    /* Keyframes for fade-in and zoom effect */
+    @keyframes fadeInZoom {
+        0% {
+            opacity: 0;
+            transform: scale(0.9); /* Slightly smaller */
+        }
+        100% {
+            opacity: 1;
+            transform: scale(1); /* Original size */
+        }
+    }
+
+        /* Base styling */
+    .product-features h4 {
+        font-family: Georgia, serif;
+        font-size: 1.8em;
+        color: black;
+        margin-bottom: 15px;
+        animation: fadeInTitle 1s ease-out forwards;
+        opacity: 0;
+    }
+
+    /* List item animations */
+    .product-features li {
+        opacity: 0;
+        color:black;
+        transform: translateY(20px);
+        animation: fadeInUp 0.8s ease-out forwards;
+        animation-delay: calc(0.2s * var(--i)); /* Staggered animation for each item */
+    }
+
+    /* Keyframes for fade-in and slide-up animations */
+    @keyframes fadeInTitle {
+        0% {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeInUp {
+        0% {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+</style>
+<style>
+        /* Base styling */
+    .price-display {
+        font-size: 1.5em;
+        color: #333;
+        display: flex;
+        align-items: center;
+    }
+
+    .original-price {
+        font-weight: bold;
+        color: #333; /* Default color before animation */
+        position: relative;
+        display: inline-block;
+        animation: colorChange 20s ease-in-out infinite;
+    }
+
+    .original-price::after {
+        content: "";
+        font-weight: 100;
+        position: absolute;
+        left: -1%; /* Start from the right edge */
+        bottom: 50%;
+        width: 0;
+        height: 3px;
+        background-color: #dc3545; /* Color of the strike-through line */
+        animation: strikeThrough 20s ease-in-out infinite;
+        transform: translateY(50%);
+    }
+
+    .discount-price {
+        display: inline-block;
+        opacity: 0; /* Initially hidden */
+        margin-left: 10px;
+        color: #2ae756; /* Discount price color */
+        font-weight: bold;
+        animation: fadeInDiscount 20s ease-in-out infinite;
+        animation-delay: 0.5s; /* Delay to sync with strikethrough */
+    }
+
+    /* Keyframes for color change and pseudo-element animation */
+  
+
+    @keyframes strikeThrough {
+        0%, 19% {
+            width: 0; /* Hidden initially */
+        }
+        20%, 100% {
+            width: 100%; /* Extends fully from right to left */
+        }
+    }
+
+    @keyframes fadeInDiscount {
+        0%, 19% {
+            opacity: 0; /* Hidden initially */
+            transform: translateX(-15px);
+        }
+        20%, 100% {
+            opacity: 1; /* Fade in discounted price */
+            transform: translateX(0);
+        }
+    }
+
+</style>
+<style>
+    @keyframes fadeInUp {
+        0% {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    /* Title Animation */
+    .animated-title {
+        font-family: Georgia;
+        font-size: 50px;
+        animation: fadeInUp 1s ease-out forwards; /* Adjust duration and delay */
+        opacity: 0; /* Ensures animation is visible only when triggered */
+    }
+</style>
+<style>
+    
+    .buy-now-btn {
+        background-color: #ffc107; /* Initial button color */
+        transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+    
+    .buy-now-btn:hover {
+        background-color: #FFD700; /* Darker yellow on hover */
+        transform: translateY(-5px); /* Slight lift on hover */
+        box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3); /* Shadow effect */
+    }
+        
+    .add-to-cart-btn {
+        transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+    
+    .add-to-cart-btn:hover {
+        transform: translateY(-5px); /* Slight lift on hover */
+        box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3); /* Shadow effect */
+    }
+    
+    .add-to-cart-btn i {
+        transition: transform 0.3s ease-in-out;
+    }
+    
+    .add-to-cart-btn:hover i {
+        transform: scale(1.2); /* Enlarge the icon slightly on hover */
+    }
+    
+</style>
+{% endblock main-content %}

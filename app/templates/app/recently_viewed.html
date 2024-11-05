@@ -1,0 +1,57 @@
+{% extends "app/base.html" %}
+{% load static %}
+{% block title %}Recently Viewed Products{% endblock %}
+
+{% block main-content %}
+    
+</style>
+<div class="container my-5 background-image3">
+    <!-- Background Waves -->
+    <div class="wave -one"></div>
+    <div class="wave -two"></div>
+
+    <!-- Content Container -->
+    <div class="container-content">
+        <h3 class="forms1">Recently Viewed Products</h3>
+        <hr class="white-hr">
+        <div class="row ">
+            <div class="col-sm-2 border-end">
+                <ul class="list-unstyled">
+                    <li class="d-grid"><a href="{% url 'profile' %}" class="btn btn-primary">Profile</a></li><br>
+                    <li class="d-grid"><a href="{% url 'address' %}" class="btn btn-primary">Address</a></li><br>
+                    <li class="d-grid"><a href="{% url 'recently_viewed' %}" class="btn btn-success">recently viewed</a></li>
+                </ul>
+            </div>
+            <div class="col-sm-10  ">
+                <div class="row container " style="background-color:transparent;">
+                    {% for item in recently_viewed %}
+                    <div class="col-md-4">
+                        <div class="card h-100 p-2">
+                            <img src="{{ item.Product.product_image.url }}" class="card-img-top img-fluid" alt="{{ item.product.title }}" style="object-fit: cover; width:200px; height: 200px;">
+                            <div class="card-body">
+                                <h5 class="fw-bold">{{ item.Product.title }}</h5>
+                                <h6>
+                                    <span style='color:red;' class="text-decoration-line-through">Rs. {{ item.Product.selling_price }} /-</span> &nbsp;
+                                    <span style='color:green;'>Rs. {{ item.Product.discount_price }} /-</span>
+                                </h6>                            <div class="product-actions">
+                                    <a href="{% url 'product-detail' item.Product.id %}" class="btn btn-warning ">View</a>
+                                    {% if item.Product.id in cart_items %}
+                                        <button class="add-to-cart-btn btn btn-success " data-product-id="{{ item.Product.id }}">
+                                            Added&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-check"></i>
+                                        </button>
+                                    {% else %}
+                                        <button class="add-to-cart-btn btn btn-primary " data-product-id="{{ item.Product.id }}">
+                                            Cart&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-cart-shopping"></i>
+                                        </button>
+                                    {% endif %}
+                                </div>                        
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

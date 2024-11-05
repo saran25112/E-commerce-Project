@@ -1,0 +1,285 @@
+{% extends "app/base.html" %}
+{% load static %}
+{% block title  %}Cart{% endblock title %}
+{% block main-content %}
+<style>
+    .background-image1 {
+        background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+        background-size: 400% 400%;
+        animation: gradient 15s ease infinite;
+        border-radius: 10px;
+        padding: 20px;
+    }
+    
+    @keyframes gradient {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+    
+    .background-image {
+        background: linear-gradient(180deg, rgba(2, 0, 36, 1), rgba(1, 81, 119, 1), rgba(9, 126, 149, 1), rgba(2, 0, 36, 1));
+        background-size: 100% 200%;
+        animation: gradientAnimation 10s ease infinite;
+        border-radius: 10px;
+        padding: 20px;
+    }
+    
+    @keyframes gradientAnimation {
+        0% {
+            background-position: 50% 0%;
+        }
+        50% {
+            background-position: 50% 100%;
+        }
+        100% {
+            background-position: 50% 0%;
+        }
+    }
+</style>
+<div class="container my-5 background-image1">
+    <h1 class="text-center mb-3" style="color:white;">Shopping Cart</h1>
+    <hr class="white-hr">
+    <div class="row">
+        {% if cart %}
+        <div class="col-sm-8">
+            <div class="card">
+                <div class="card-body">
+                    <h3>Cart</h3>
+                    {% for item in cart %}
+                    <div class="row">
+                        <div class="col-sm-3 text-center align-self-center"><img src="{{item.Product.product_image.url}}" alt="" srcset="" class="img-fluid img-thumbnail shadow-sm" height="150" width="150"> </div>
+                            <div class="col-sm-9">
+                                <div>
+                                    <h5>{{item.Product.title}}</h5>
+                                    <p class="mb-2 text-muted small">{{item.Product.description}}</p>
+                                    <div class="my-3">
+                                        <label for="quantity">Quantity:</label>
+                                        <a class="minus-cart btn" pid={{item.Product.id}}><i class="fa fa-minus-square fa-lg"></i></a>
+                                            <span id="quantity">{{item.quantity}}</span>
+                                        <a class="plus-cart btn" pid={{item.Product.id}}><i class="fas fa-plus-square fa-lg"></i></a>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <a href="#" class="remove-cart btn btn-sm btn-secondary mr-3" pid={{item.Product.id}}>Remove item </a> 
+                                        <p class="mb-0"><span><strong>Rs. {{item.Product.discount_price}}</strong></span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                      <hr class="text-muted">
+                    {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>The Total Amount of</h3>
+                        <ul class="list-group">
+                            <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0" >Amount <span id="amount">Rs. {{amount}}</span></li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center px-0">Shipping<span>Rs. 40.00</span></li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                                <div>
+                                    <strong>Total</strong> <small>(including GST)</small>
+                                </div>
+                                <span id="totalamount"><strong>Rs. {{totalamount}}</strong></span> 
+                            </li>
+                        </ul>
+                        <div class="d-grid"><a href="{% url 'checkout' %}" class="btn btn-primary">Place Order</a></div> </div>
+                    </div> 
+                </div>
+            </div>
+            {% else %}                        
+                <h1 class="text-center mb-5 " style="color:#fff; font-size:50px;" >Cart is Empty</h1>
+                <div class="text-center">
+                    <a href="{% url 'all_products' %}" onclick="updateCategoryTitle('All Products');" class="lottie-container">
+                        <iframe src="https://lottie.host/embed/bcfdce4f-05bc-4bb4-9d2f-a199996d3765/pghIuZ8ME4.json" class='lottie-animation'></iframe>    
+                        <h1 class="text-center mb-5 empty-cart-title" >Add Products</h1>
+                    </a><hr class="white-hr">
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="container my-5 background-image">
+    {% if wishitem %}
+    <h1 class="text-center mb-3" style="color:white;">Wishlists</h1>
+    <hr class="white-hr">
+    <div class="scroll-container">
+        <div class="d-flex flex-row overflow-auto">
+            {% for item in wishlist_items %}
+            <div class="card shadow p-2 m-2" style="min-width: 250px;">
+                <img src="{{ item.product.product_image.url }}" class="card-img-top" alt="{{ item.product.title }}" style="height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title font-weight-bold">{{ item.product.title }}</h5>
+                    <h5>
+                        <span style='color:red;' class="text-decoration-line-through">Rs. {{ item.product.selling_price }} /-</span> &nbsp;
+                        <span style='color:green;'>Rs. {{ item.product.discount_price }} /-</span>
+                    </h5>
+                    <div class="product-actions">
+                        <a href="{% url 'product-detail' item.product.id %}" class="view-btn btn btn-warning flex-fill">View</a>
+                            {% if item.product.id in cart_items %}
+                                <button class="add-to-cart-btn btn btn-success flex-fill" data-product-id="{{ item.product.id }}">
+                                    Added&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-check"></i>
+                                </button>
+                            {% else %}
+                                <button class="add-to-cart-btn btn btn-primary flex-fill" data-product-id="{{ item.product.id }}">
+                                    Add To Cart&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-cart-shopping"></i>
+                                </button>
+                            {% endif %}
+                        
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% else %}
+        <div class="text-center">
+        <hr class="white-hr">
+            <a href="{% url 'all_products' %}" onclick="updateCategoryTitle('All Products');" class="lottie-container">
+                <h1 class="text-center mb-5 empty-cart-title1" >Add Products in Wishlists</h1>
+            </a><hr class="white-hr">
+        </div>
+    {% endif %}
+</div>
+<div class="container my-5 background-image" >
+    <h1 class="text-center mb-3" style="color:white;">Recently Viewed Products</h1>
+    <hr class="white-hr">
+    <div class="row ">
+  
+        
+        <div class="col-sm-12">
+            <div class="scroll-container">
+                <div class="d-flex flex-row overflow-auto">
+                    {% for item in recently_viewed %}
+                    <div class="card h-100 p-2 m-2" style="min-width: 200px;">
+                        <img src="{{ item.Product.product_image.url }}" class="card-img-top img-fluid" alt="{{ item.product.title }}" style="object-fit: cover; width:200px; height: 200px;">
+                        <div class="card-body">
+                            <h5 class="fw-bold">{{ item.Product.title }}</h5>
+                            <h6>
+                                <span style='color:red;' class="text-decoration-line-through">Rs. {{ item.Product.selling_price }} /-</span> &nbsp;
+                                <span style='color:green;'>Rs. {{ item.Product.discount_price }} /-</span>
+                            </h6>
+                            <div class="product-actions">
+                                <a href="{% url 'product-detail' item.Product.id %}" class="view-btn btn btn-warning">View</a>
+                                {% if item.Product.id in cart_items %}
+                                    <button class="add-to-cart-btn btn btn-success" data-product-id="{{ item.Product.id }}">
+                                        Added&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-check"></i>
+                                    </button>
+                                {% else %}
+                                    <button class="add-to-cart-btn btn btn-primary" data-product-id="{{ item.Product.id }}">
+                                        Cart&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-cart-shopping"></i>
+                                    </button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .scroll-container {
+        white-space: nowrap;
+        overflow-x: auto;
+        padding-bottom: 10px;
+    }
+    .scroll-container::-webkit-scrollbar {
+        height: 8px;
+    }
+    .scroll-container::-webkit-scrollbar-thumb {
+        background-color: #888;
+        border-radius: 10px;
+    }
+</style>
+
+<style>
+    .empty-cart-title {
+        color: white; /* Initial color */
+        transition: color 0.3s ease, text-shadow 0.3s ease; /* Smooth transition */
+    }
+
+    .empty-cart-title:hover {
+        color: #ffcc00; /* Change color on hover */
+        text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); /* Add text shadow */
+    }
+    .empty-cart-title1 {
+        color: white; /* Initial color */
+        transition: color 0.3s ease, text-shadow 0.3s ease; /* Smooth transition */
+    }
+
+    .empty-cart-title1:hover {
+        color: green; /* Change color on hover */
+        text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); /* Add text shadow */
+    }
+    .add-to-cart-btn {
+        transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+    
+    .add-to-cart-btn:hover {
+        transform: translateY(-5px); /* Slight lift on hover */
+        box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3); /* Shadow effect */
+    }
+    
+    .add-to-cart-btn i {
+        transition: transform 0.3s ease-in-out;
+    }
+    
+    .add-to-cart-btn:hover i {
+        transform: scale(1.2); /* Enlarge the icon slightly on hover */
+    }
+    .view-btn {
+        background-color: #ffc107; /* Original color */
+        transition: all 0.3s ease;
+    }
+    
+    .view-btn:hover {
+        background-color: #ff9800; /* Darker shade on hover */
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        transform: translateY(-3px); /* Slight lift effect */
+    }
+</style>
+
+<style>
+    @keyframes shake {
+        0% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        50% { transform: translateX(5px); }
+        75% { transform: translateX(-5px); }
+        100% { transform: translateX(0); }
+    }
+    
+    .empty-cart {
+        animation: shake 0.5s ease forwards;
+    }
+    
+</style>
+<style>
+    .lottie-container {
+        display: inline-block; /* Makes the anchor behave like a block */
+        cursor: pointer; /* Change the cursor to a pointer */
+    }
+
+    .lottie-animation {
+        width: 300px; /* Initial width */
+        height: 300px; /* Initial height */
+        transition: transform 0.3s ease; /* Smooth transition for scaling */
+    }
+
+    .lottie-container:hover .lottie-animation {
+        transform: scale(1.2); /* Scale up on hover */
+    }
+</style>
+{% endblock main-content %}

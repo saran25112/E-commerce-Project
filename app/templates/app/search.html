@@ -1,0 +1,69 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %} Search Result{% endblock title %}
+{% block main-content %}
+<style>
+    .card-img-top {
+        object-fit: cover; /* Ensures the image covers the entire area */
+        height: 200px; /* Fixed height for the image */
+        width: 100%; /* Makes sure the image fills the width of the card */
+    }
+</style>
+
+<div class="container my-5">
+    {% if Product %}
+    <div class="row">
+        <div class="col-sm-10">
+            <div class="row g-4">
+                {% for Prod in Product %}
+                    <div class="col-lg-4 col-md-6 col-sm-12 text-center mb-5 hover-shadow">
+                        <a href="{% url 'product-detail' Prod.id %}" class="btn">
+                            <div class="card h-100 p-3">
+                                <img src="{{Prod.product_image.url}}" class="card-img-top img-fluid" alt="{{Prod.title}}" style="object-fit: cover; height: 200px;" />
+                                <div class="card-body">
+                                    <h5 class="fw-bold">{{Prod.title}}</h5>
+                                    <p class="fw-bold text-danger">
+                                        Rs.{{Prod.discount_price}}/-
+                                        <small class="fw-light text-decoration-line-through">{{Prod.selling_price}}</small>
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% else %}
+        <h1 id="no-results" style="color:#fff; transition: opacity 1s;">No results found for "{{ query }}"</h1>
+        <p id="countdown" style="color: #fff;">Redirecting to Home in <span id="timer">10</span> seconds...</p>
+
+        <script>
+            // Countdown Timer
+            let timeLeft = 10; // Starting time in seconds
+            const timerElement = document.getElementById("timer");
+
+            // Update countdown every second
+            const countdownInterval = setInterval(function() {
+                timeLeft--;
+                timerElement.textContent = timeLeft;
+                
+                // Fade out effect as it approaches 0
+                if (timeLeft <= 2) {
+                    document.getElementById("no-results").style.opacity = '0';
+                    document.getElementById("countdown").style.opacity = '0.7';
+                }
+
+                // Redirect when countdown reaches 0
+                if (timeLeft <= 0) {
+                    clearInterval(countdownInterval);
+                    window.location.href = "/";  // Replace 'all_products' with your actual URL name
+                }
+            }, 1000);
+        </script>
+    {% endif %}
+
+
+</div>
+
+{% endblock main-content %}
