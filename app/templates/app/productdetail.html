@@ -3,11 +3,49 @@
 {% block title  %}product-detail{% endblock title %}
 
 {% block main-content %}
+<style>
+        /* For the heart icons */
+    .heart-icon {
+        transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+    /* Hover effect: Enlarge and change color on hover */
+    .heart-icon:hover {
+        transform: scale(1.2);
+        color: red !important; /* Ensure color is applied on hover */
+    }
+
+    /* Add a smooth transition when switching between filled and outlined hearts */
+    .plus-wishlist .heart-icon {
+        transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+    .minus-wishlist .heart-icon {
+        transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+    /* Animate color change and scale when adding to wishlist */
+    .plus-wishlist:hover .heart-icon {
+        color: red;
+        transform: scale(1.3);
+    }
+
+    .minus-wishlist:hover .heart-icon {
+        color: #e40000;
+        transform: scale(1.3);
+    }
+
+</style>
 <div class="container mt-3">
     <!-- Main Product Details -->
     <div class="row flex justify-content-between">
         <div class="img2 col-lg-5 mt-5">
             <img src="{{Product.product_image.url}}" class="image col-xs-6 col-sm-12 col-lg-12 mt-3 text-sm-center w-100 h-75" alt="">
+            {% if Product.is_veg == 'Veg' %}
+                <span class=" bg-white position-absolute top-20 start-50 translate-middle-x mt-2"><svg xmlns="http://www.w3.org/2000/svg" height="34px" viewBox="0 -960 960 960" width="34px" fill="green"><path d="M120-120v-720h720v720H120Zm80-80h560v-560H200v560Zm280-120q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47Z"/></svg></span>
+            {% else %}
+                <span class=" bg-white position-absolute top-15 start-50 translate-middle-x mt-2"><svg xmlns="http://www.w3.org/2000/svg" height="34px" viewBox="0 -960 960 960" width="34px" fill="red"><path d="M120-120v-720h720v720H120Zm80-80h560v-560H200v560Zm280-120q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47Z"/></svg></span>
+            {% endif %}
         </div>
         <div class="productdetail col-lg-5">
             <h1 class="animated-title">{{Product.title}}</h1>
@@ -20,7 +58,7 @@
                 <ul class="fs-5" style="font-family: Rajdhani">
                     <li>{{Product.description}}</li>
                     <li>Composition: {{Product.composition}}</li>
-                    <li>Use: {{Product.prodapp}}</li>
+                    <li> {{Product.prodapp}}</li>
                 </ul>
             </div>
             <div class="d-flex align-items-center">
@@ -34,7 +72,7 @@
                 {% if wishlist %}
                     <a pid="{{ Product.id }}" class="minus-wishlist ms-4 flex-fill"><i class="fas fa-heart fa-3x heart-icon add" style="color: red;"></i></a>
                 {% else %}
-                    <a pid="{{ Product.id }}" class="plus-wishlist ms-4 flex-fill"><i class="fa fa-heart fa-3x heart-icon remove" style="color:white;"></i></a>
+                    <a pid="{{ Product.id }}" class="plus-wishlist ms-4 flex-fill"><i class="far fa-heart fa-3x heart-icon remove" style="color:white;"></i></a>
                 {% endif %}
             </div>
         </div>
@@ -48,6 +86,15 @@
         <div class="similar-products d-flex overflow-auto">
             {% for similar_product in similar_products %}
             <div class="card mx-2" style="min-width: 200px; max-width: 200px;">
+                {% if similar_product.is_veg == 'Veg' %}
+                    <span class="bg-white veg-icon position-absolute top-0 start-0 mt-2 ms-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="34px" viewBox="0 -960 960 960" width="34px" fill="green"><path d="M120-120v-720h720v720H120Zm80-80h560v-560H200v560Zm280-120q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47Z"/></svg>                    
+                    </span>
+                {% else %}
+                    <span class="bg-white veg-icon position-absolute top-0 start-0 mt-2 ms-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="34px" viewBox="0 -960 960 960" width="34px" fill="red"><path d="M120-120v-720h720v720H120Zm80-80h560v-560H200v560Zm280-120q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47Z"/></svg>                    
+                    </span>
+                {% endif %}
                 <img src="{{ similar_product.product_image.url }}" class="card-img-top" alt="{{ similar_product.title }}">
                 <div class="card-body text-center">
                     <h6 class="card-title">{{ similar_product.title }}</h6>
@@ -76,8 +123,19 @@
             {% for Products in all_products %}
             <div class="col text-center mb-4">
                 <a href="{% url 'product-detail' Products.id %}" class="btn">
-                    <div>
+                    <div class="position-relative">
+                        <!-- Veg/Non-Veg Badge -->
+                        {% if Products.is_veg == 'Veg' %}
+                            <span class="bg-white veg-icon position-absolute top-0 start-0 mt-2 ms-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="34px" viewBox="0 -960 960 960" width="34px" fill="green"><path d="M120-120v-720h720v720H120Zm80-80h560v-560H200v560Zm280-120q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47Z"/></svg>                    
+                            </span>
+                        {% else %}
+                            <span class="bg-white veg-icon position-absolute top-0 start-0 mt-2 ms-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="34px" viewBox="0 -960 960 960" width="34px" fill="red"><path d="M120-120v-720h720v720H120Zm80-80h560v-560H200v560Zm280-120q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47Z"/></svg>                    
+                            </span>
+                        {% endif %}
                         <img src="{{ Products.product_image.url }}" class="product-img-hover" width="300px" height="200px" />
+                        
                         <div class="fw-bold" style="color: white;">{{ Products.title }}</div>
                         <div class="fw-bold text-danger">
                             Rs.{{ Products.discount_price }}/-
@@ -350,6 +408,11 @@
     
     .add-to-cart-btn:hover i {
         transform: scale(1.2); /* Enlarge the icon slightly on hover */
+    }
+    .card-img-top {
+        width: 100%; /* Make the image take up the full width of its container */
+        height: 200px; /* Set a fixed height, adjust as needed */
+        object-fit: cover; /* Ensures the image covers the space without distortion */
     }
     
 </style>

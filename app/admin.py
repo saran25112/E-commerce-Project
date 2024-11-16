@@ -8,7 +8,17 @@ from . models import Cart, Customer, OrderPlaced, Payment, RecentlyViewed, Wishl
 @admin.register(product)
 class ProductModelAdmin(admin.ModelAdmin):
     list_display = [ 'id','title','discount_price','category','product_image']
-    
+    def make_veg(modeladmin, request, queryset):
+        queryset.update(is_veg='Veg')  # Update is_veg field to 'Veg'
+        modeladmin.message_user(request, "Selected products have been marked as Vegetarian.")
+
+    # Custom action to mark selected products as 'Non-Veg'
+    def make_non_veg(modeladmin, request, queryset):
+        queryset.update(is_veg='Non-Veg')  # Update is_veg field to 'Non-Veg'
+        modeladmin.message_user(request, "Selected products have been marked as Non-Vegetarian.")
+
+    # Define the actions in the admin interface
+    actions = [make_veg, make_non_veg]
 @admin.register(Customer)
 class ProductModelAdmin(admin.ModelAdmin):
     list_display = [ 'id','user','locality','city','state','zipcode']

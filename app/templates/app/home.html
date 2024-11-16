@@ -33,90 +33,160 @@
 <div class="container mt-3 ">
     <div class="row bg-dark text-center p-5 text-white border-bottom shadow">
         <h1>products</h1>
-        <small class="fs-5">Chicken rice is a comforting dish that combines tender chicken with fragrant rice, often cooked in chicken broth for extra flavor. It’s a staple in many Asian cuisines, known for its simplicity and heartiness. Shawarma is a Middle Eastern delight, featuring marinated meat, typically chicken or lamb, cooked on a vertical rotisserie and served in a wrap with vegetables and sauces. It’s a popular street food known for its rich, savory taste. BBQ refers to the method of slow-cooking meat over a fire, infusing it with smoky flavors. It’s a beloved tradition in many cultures, often associated with gatherings and celebrations. Chicken tikka is a classic Indian dish where pieces of chicken are marinated in spices and yogurt, then grilled to perfection. It’s known for its vibrant flavors and is often enjoyed with naan or rice..</small>
+        <small class="fs-5">Chicken rice is a comforting dish that combines tender chicken with fragrant rice, often cooked in chicken broth for extra flavor. It’s a staple in many Asian cuisines, known for its simplicity and heartiness. Shawarma is a Middle Eastern delight, featuring marinated meat, typically chicken or lamb, cooked on a vertical rotisserie and served in a wrap with vegetables and sauces. It’s a popular street food known for its rich, savory taste. BBQ refers to the method of slow-cooking meat over a fire, infusing it with smoky flavors. It’s a beloved tradition in many cultures, often associated with gatherings and celebrations. Chicken tikka is a cSandwichesc Indian dish where pieces of chicken are marinated in spices and yogurt, then grilled to perfection. It’s known for its vibrant flavors and is often enjoyed with naan or rice..</small>
     </div>
 </div> 
 {% endblock information %}
 
-
 {% block main-content %}
 
-    <div class="container mt-3 background-image"><br/><br/>
-        <div class="d-flex align-items-center justify-content-center" style="min-height: 100px;">
-            <a class="btn product-link" style=" font-size: 50px;" href="{% url 'all_products' %}" onclick="updateCategoryTitle('All Products')">Products</a>
-        </div>
-        <br/><br/>
-        <div class="row container">
-            <div class="col-md-4 col-sm-4 mi-go wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.6s" style="animation-duration: 1s; animation-delay: 0.6s; animation-name: none;">
-                <div class="goodnesssec buttermilk smbg" onclick="updateCategoryTitle('Ghee')">
-                    <a href="{% url 'category' 'GH' %}">
-                        <div class="goodnessseccont text-center">
-                            <img src="{% static 'app/images/product/curd-total.png' %}"class="img-responsive center-block" style="height: 250px; object-fit: cover;"alt="">
-                            <p class="mlkpro">Ghee</p>
-                        </div>
-                    </a>
-
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-4 mi-go wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.6s" style="animation-duration: 1s; animation-delay: 0.6s; animation-name: none;">
-                <div class="goodnesssec buttermilk curdbgpro" onclick="updateCategoryTitle('Curd')">
-                    <a href="{% url 'category' 'CR' %}">
-                        <div class="goodnessseccont text-center">
-                            <img src="{% static 'app/images/product/curd-total.png' %}" class="img-responsive center-block" style="height: 250px; object-fit: cover;"alt="">
-                            <p class="mlkpro">Curd</p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <br><br>
-          <div class="col-md-4 col-sm-4 mi-go wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.6s" style="animation-duration: 1s; animation-delay: 0.6s; animation-name: none;">
-              <div class="goodnesssec buttermilk buttermilk"onclick="updateCategoryTitle('Kulfi')">
-                  <a href="{% url 'category' 'IC' %}">
-                      <div class="goodnessseccont text-center">
-                          <img src="{% static 'app/images/product/kulfi.png' %}" class="img-responsive center-block"style="height: 250px; object-fit: cover;" alt="">
-                          <p class="mlkpro">Kulfi</p>
-                      </div>
-                  </a>
-              </div>
-          </div>
-      </div>
-
-      <br><br>
-
-      <div class="row container">
+<div class="container mt-3 background-image"><br/><br/>
+    <div class="d-flex align-items-center justify-content-center" style="min-height: 100px;">
+        <a class="btn product-link" style=" font-size: 50px;" href="{% url 'all_products' %}" onclick="updateCategoryTitle('All Products')">Products</a>
+    </div>
+    <br/><br/>
+    <div class="row container">
         <div class="col-md-4 col-sm-4 mi-go wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.6s" style="animation-duration: 1s; animation-delay: 0.6s; animation-name: none;">
-            <div class="goodnesssec buttermilk smbg"onclick="updateCategoryTitle('milk shake')">
-                <a href="{% url 'category' 'MS' %}">
+            <div class="goodnesssec butterPizzas smbg" onclick="updateCategoryTitle('Burgers')">
+                <a href="{% url 'category' 'CR' %}">
                     <div class="goodnessseccont text-center">
-                        <img src="{% static 'app/images/product/milk-shake-chocolate.png' %}" class="img-responsive center-block" style="height: 250px; object-fit: cover;"alt="">
-                        <p class="mlkpro">milk shake</p>
+                        <img src="{% static 'app/images/product/Burgers.png' %}"class="img-responsive center-block" style="height: 250px; object-fit: cover;"alt="">
+                        <p class="mlkpro">Burgers</p>
                     </div>
                 </a>
-
             </div>
         </div>
+        <br><br>
         <div class="col-md-4 col-sm-4 mi-go wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.6s" style="animation-duration: 1s; animation-delay: 0.6s; animation-name: none;">
-            <div class="goodnesssec buttermilk curdbgpro"onclick="updateCategoryTitle('Milk')">
+            <div class="goodnesssec butterPizzas Burgersbgpro" onclick="updateCategoryTitle('Pizzas')">
                 <a href="{% url 'category' 'ML' %}">
                     <div class="goodnessseccont text-center">
-                        <img src="{% static 'app/images/product/cow-milk.png' %}" class="img-responsive center-block"style="height: 250px; object-fit: cover;" alt="">
-                        <p class="mlkpro">Milk</p>
+                        <img src="{% static 'app/images/product/Pizzas.png' %}" class="img-responsive center-block" style="height: 250px; object-fit: cover;"alt="">
+                        <p class="mlkpro">Pizzas</p>
                     </div>
                 </a>
             </div>
         </div>
-   
-      <div class="col-md-4 col-sm-4 mi-go wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.6s" style="animation-duration: 1s; animation-delay: 0.6s; animation-name: none;">
-          <div class="goodnesssec buttermilk buttermilk"onclick="updateCategoryTitle('Ice Bars')">
-              <a href="{% url 'category' 'IC' %}">
-                  <div class="goodnessseccont text-center">
-                      <img src="{% static 'app/images/product/icbars.png' %}" class="img-responsive center-block" style="height: 250px; object-fit: cover;"alt="">
-                      <p class="mlkpro">Ice Bars</p>
-                  </div>
-              </a>
-          </div>
-      </div>
+        <br><br>
+        <div class="col-md-4 col-sm-4 mi-go wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.6s" style="animation-duration: 1s; animation-delay: 0.6s; animation-name: none;">
+            <div class="goodnesssec butterPizzas butterPizzas"onclick="updateCategoryTitle('Sandwiches')">
+                <a href="{% url 'category' 'LS' %}">
+                    <div class="goodnessseccont text-center">
+                        <img src="{% static 'app/images/product/Sandwiches.png' %}" class="img-responsive center-block"style="height: 250px; object-fit: cover;" alt="">
+                        <p class="mlkpro">Sandwiches</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <br><br>
+    <div class="row container">
+        <div class="col-md-4 col-sm-4 mi-go wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.6s" style="animation-duration: 1s; animation-delay: 0.6s; animation-name: none;">
+            <div class="goodnesssec butterPizzas smbg"onclick="updateCategoryTitle('Tacos')">
+                <a href="{% url 'category' 'MS' %}">
+                    <div class="goodnessseccont text-center">
+                        <img src="{% static 'app/images/product/Tacos.png' %}" class="img-responsive center-block" style="height: 250px; object-fit: cover;"alt="">
+                        <p class="mlkpro">Tacos</p>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-4 mi-go wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.6s" style="animation-duration: 1s; animation-delay: 0.6s; animation-name: none;">
+            <div class="goodnesssec butterPizzas Burgersbgpro"onclick="updateCategoryTitle('Fries and Sides')">
+                <a href="{% url 'category' 'PN' %}">
+                    <div class="goodnessseccont text-center">
+                        <img src="{% static 'app/images/product/Fries-and-Sides.png' %}" class="img-responsive center-block"style="height: 250px; object-fit: cover;" alt="">
+                        <p class="mlkpro">Fries and Sides</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <br><br>
+        <div class="col-md-4 col-sm-4 mi-go wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.6s" style="animation-duration: 1s; animation-delay: 0.6s; animation-name: none;">
+            <div class="goodnesssec butterPizzas butterPizzas"onclick="updateCategoryTitle('Hot Dogs')">
+                <a href="{% url 'category' 'GH' %}">
+                    <div class="goodnessseccont text-center">
+                        <img src="{% static 'app/images/product/Hot-Dogs.png' %}" class="img-responsive center-block" style="height: 250px; object-fit: cover;"alt="">
+                        <p class="mlkpro">Hot Dogs</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
       <br/><br/>
+    <div class="row container">
+        <div class="col-md-4 col-sm-4 mi-go wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.6s" style="animation-duration: 1s; animation-delay: 0.6s; animation-name: none;">
+            <div class="goodnesssec butterPizzas smbg" onclick="updateCategoryTitle('Salads')">
+                <a href="{% url 'category' 'CZ' %}">
+                    <div class="goodnessseccont text-center">
+                        <img src="{% static 'app/images/product/Salads.png' %}"class="img-responsive center-block" style="height: 250px; object-fit: cover;"alt="">
+                        <p class="mlkpro">Salads</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <br><br>
+        <div class="col-md-4 col-sm-4 mi-go wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.6s" style="animation-duration: 1s; animation-delay: 0.6s; animation-name: none;">
+            <div class="goodnesssec butterPizzas Burgersbgpro" onclick="updateCategoryTitle('Wraps')">
+                <a href="{% url 'category' 'IC' %}">
+                    <div class="goodnessseccont text-center">
+                        <img src="{% static 'app/images/product/Wraps.png' %}" class="img-responsive center-block" style="height: 250px; object-fit: cover;"alt="">
+                        <p class="mlkpro">Wraps</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <br><br>
+        <div class="col-md-4 col-sm-4 mi-go wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.6s" style="animation-duration: 1s; animation-delay: 0.6s; animation-name: none;">
+            <div class="goodnesssec butterPizzas butterPizzas"onclick="updateCategoryTitle('Chicken')">
+                <a href="{% url 'category' 'CH' %}">
+                    <div class="goodnessseccont text-center">
+                        <img src="{% static 'app/images/product/Grilled-Chicken.webp' %}" class="img-responsive center-block"style="height: 250px; object-fit: cover;" alt="">
+                        <p class="mlkpro">Chicken</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <br><br>
+    <div class="row container">
+        <div class="col-md-4 col-sm-4 mi-go wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.6s" style="animation-duration: 1s; animation-delay: 0.6s; animation-name: none;">
+            <div class="goodnesssec butterPizzas smbg"onclick="updateCategoryTitle('Seafood')">
+                <a href="{% url 'category' 'SE' %}">
+                    <div class="goodnessseccont text-center">
+                        <img src="{% static 'app/images/product/Seafood.png' %}" class="img-responsive center-block" style="height: 250px; object-fit: cover;"alt="">
+                        <p class="mlkpro">Seafood</p>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+        <br><br>
+        <div class="col-md-4 col-sm-4 mi-go wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.6s" style="animation-duration: 1s; animation-delay: 0.6s; animation-name: none;">
+            <div class="goodnesssec butterPizzas Burgersbgpro"onclick="updateCategoryTitle('Desserts')">
+                <a href="{% url 'category' 'DE' %}">
+                    <div class="goodnessseccont text-center">
+                        <img src="{% static 'app/images/product/Milkshake.png' %}" class="img-responsive center-block"style="height: 250px; object-fit: cover;" alt="">
+                        <p class="mlkpro">Desserts</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <br><br>        
+        <div class="col-md-4 col-sm-4 mi-go wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.6s" style="animation-duration: 1s; animation-delay: 0.6s; animation-name: none;">
+            <div class="goodnesssec butterPizzas butterPizzas"onclick="updateCategoryTitle('Noodles and Pasta')">
+                <a href="{% url 'category' 'NO' %}">
+                    <div class="goodnessseccont text-center">
+                        <img src="{% static 'app/images/product/Stir-Fried-Noodles.webp' %}" class="img-responsive center-block"style="height: 250px; object-fit: cover;" alt="">
+                        <p class="mlkpro">Noodles and Pasta</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <br><br>
+    
 <style>
     .goodnesssec {
         display: flex;

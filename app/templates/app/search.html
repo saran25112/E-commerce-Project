@@ -36,7 +36,7 @@
     </div>
     {% else %}
         <h1 id="no-results" style="color:#fff; transition: opacity 1s;">No results found for "{{ query }}"</h1>
-        <p id="countdown" style="color: #fff;">Redirecting to Home in <span id="timer">10</span> seconds...</p>
+        <p id="countdown" style="color: #fff;">Redirecting in <span id="timer">10</span> seconds...</p>
 
         <script>
             // Countdown Timer
@@ -57,7 +57,7 @@
                 // Redirect when countdown reaches 0
                 if (timeLeft <= 0) {
                     clearInterval(countdownInterval);
-                    window.location.href = "/";  // Replace 'all_products' with your actual URL name
+                    window.location.href = "/all-products";  // Replace 'all_products' with your actual URL name
                 }
             }, 1000);
         </script>

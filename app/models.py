@@ -23,15 +23,26 @@ STATE_CHOICES = (
 )
 
 CATEGORY_CHOICES=(
-    ('CR','curd'),
-    ('ML','Milk'),
-    ('LS','Lassi'),
-    ('MS','Milkshake'),
-    ('PN','paneer'),
-    ('GH','Ghee'),
-    ('CZ','Cheese'),
-    ('IC','Ice-cream'),
+    ('CR','Burgers'),
+    ('ML','Pizzas'),
+    ('LS','Sandwiches'),
+    ('MS','Tacos'),
+    ('PN','Fries and Sides'),
+    ('GH','Hot Dogs'),
+    ('CZ','Salads'),
+    ('IC','Wraps'),
+    ('CH','Chicken'),
+    ('SE','Seafood',),
+    ('DE','Desserts',),
+    ('BR','Breakfast'),
+    ('BE','Beverages'),
+    ('NO','Noodles and Pasta'),
+    ('SB','Specialty Bowls'),
 )
+VEGETARIAN_CHOICES = [
+        ('Veg', 'Vegetarian'),
+        ('Non-Veg', 'Non-Vegetarian'),
+    ]
 
 class product(models.Model):
     title = models.CharField(max_length=100)
@@ -42,6 +53,8 @@ class product(models.Model):
     prodapp = models.TextField(default='')
     category = models.CharField(choices=CATEGORY_CHOICES, max_length=2)
     product_image = models.ImageField(upload_to='product')
+    is_veg = models.CharField(choices=VEGETARIAN_CHOICES, max_length=7, default='Veg')
+    
     def __str__(self) :
         return self.title
     
@@ -108,4 +121,4 @@ class RecentlyViewed(models.Model):
     
 class Wishlist(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
-    product = models.ForeignKey(product,on_delete=models.CASCADE)
+    product = models.ForeignKey(product,on_delete=models.CASCADE, null=True)

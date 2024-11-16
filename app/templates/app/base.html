@@ -15,8 +15,6 @@
     <link rel="stylesheet" href="{%  static 'app/css/all.min.css' %}" />
     <link rel="stylesheet" href="{% static 'app/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'app/css/style1.css' %}">
-    <link rel="stylesheet" href="{% static 'app/css/form.css' %}">
-    <link rel="stylesheet" href="{% static 'app/css/cart.css' %}">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
@@ -46,14 +44,18 @@
             </a>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonLight">
               <li><a class="dropdown-item" href="{% url 'all_products' %}" onclick="updateCategoryTitle('All Products')">All</a></li>
-              <li><a class="dropdown-item" href="{% url 'category' 'ML' %}"onclick="updateCategoryTitle('Milk')">Milk</a></li>
-              <li><a class="dropdown-item" href="{% url 'category' 'CR' %}"onclick="updateCategoryTitle('Curd')">Curd</a></li>
-              <li><a class="dropdown-item" href="{% url 'category' 'MS' %}"onclick="updateCategoryTitle('Milkshake')">Milkshake</a></li>
-              <li><a class="dropdown-item" href="{% url 'category' 'LS' %}"onclick="updateCategoryTitle('Lassi')">Lassi</a></li>
-              <li><a class="dropdown-item" href="{% url 'category' 'GH' %}"onclick="updateCategoryTitle('Ghee')">Ghee</a></li>
-              <li><a class="dropdown-item" href="{% url 'category' 'PN' %}"onclick="updateCategoryTitle('Paneer')">Paneer</a></li>
-              <li><a class="dropdown-item" href="{% url 'category' 'CZ' %}"onclick="updateCategoryTitle('Cheese')">Cheese</a></li>
-              <li><a class="dropdown-item" href="{% url 'category' 'IC' %}"onclick="updateCategoryTitle('Ice-cream')">Ice-cream</a></li>
+              <li><a class="dropdown-item" href="{% url 'category' 'ML' %}"onclick="updateCategoryTitle('Pizzas')">Pizzas</a></li>
+              <li><a class="dropdown-item" href="{% url 'category' 'CR' %}"onclick="updateCategoryTitle('Burgers')">Burgers</a></li>
+              <li><a class="dropdown-item" href="{% url 'category' 'MS' %}"onclick="updateCategoryTitle('Tacos')">Tacos</a></li>
+              <li><a class="dropdown-item" href="{% url 'category' 'LS' %}"onclick="updateCategoryTitle('Sandwiches')">Sandwiches</a></li>
+              <li><a class="dropdown-item" href="{% url 'category' 'GH' %}"onclick="updateCategoryTitle('Hot Dogs')">Hot Dogs</a></li>
+              <li><a class="dropdown-item" href="{% url 'category' 'PN' %}"onclick="updateCategoryTitle('Fries and Sides')">Fries and Sides</a></li>
+              <li><a class="dropdown-item" href="{% url 'category' 'CZ' %}"onclick="updateCategoryTitle('Salads')">Salads</a></li>
+              <li><a class="dropdown-item" href="{% url 'category' 'IC' %}"onclick="updateCategoryTitle('Wraps')">Wraps</a></li>
+              <li><a class="dropdown-item" href="{% url 'category' 'CH' %}"onclick="updateCategoryTitle('Chicken')">Chicken</a></li>
+              <li><a class="dropdown-item" href="{% url 'category' 'SE' %}"onclick="updateCategoryTitle('Seafood')">Seafood</a></li>
+              <li><a class="dropdown-item" href="{% url 'category' 'DE' %}"onclick="updateCategoryTitle('Desserts')">Desserts</a></li>
+              <li><a class="dropdown-item" href="{% url 'category' 'NO' %}"onclick="updateCategoryTitle('Noodles and Pasta')">Noodles and Pasta</a></li>
             </ul>
           </li>
           <li class="nav-item">
